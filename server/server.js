@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var { mongoose } = require('./db/mongoose');
 var { Chunk } = require('./models/chunk');
@@ -7,6 +8,8 @@ var { Chunk } = require('./models/chunk');
 var app = express();
 app.use(bodyParser.json());
 var port = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('root');
