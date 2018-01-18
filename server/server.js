@@ -6,7 +6,12 @@ var { mongoose } = require('./db/mongoose');
 var { Chunk } = require('./models/chunk');
 
 var app = express();
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
+
 var port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -40,6 +45,9 @@ app.get('/chunks/:id', (req, res) => {
 
 // add
 app.post('/chunks', (req, res) => {
+
+  console.log(req.body);
+
   var chunk = new Chunk({
     "chunk_id": req.body.chunk_id,
     "title": req.body.title,
