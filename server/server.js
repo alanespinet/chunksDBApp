@@ -77,8 +77,7 @@ app.post('/users/:uid/chunk', (req, res) => {
   var uid = req.params.uid;
 
   User.find({ 'user_id': uid }).then( (users) => {
-    var user = users.data[0];
-    res.send(user);
+    res.send(users);
   }).catch( (e) => {
     res.stats(400).send(e);
   });
