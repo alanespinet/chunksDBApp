@@ -56,6 +56,7 @@ app.get('/users/:uid', (req, res) => {
 // });
 
 
+// add a new user with no chunks to the database
 app.post('/users', (req, res) => {
   var user = new User({
     "user_id": req.body.user_id,
@@ -69,6 +70,19 @@ app.post('/users', (req, res) => {
   });
 });
 
+
+// add a new chunk to an existing user
+app.post('/users/:uid/chunk', (req, res) => {
+  var chunk = req.body.chunk;
+  var uid = req.params.uid;
+
+  User.find({ 'user_id': uid }).then( (users) => {
+    var user = users.data[0];
+    console.log(user);    
+  }).catch( (e) => {
+    res.stats(400).send(e);
+  });
+});
 
 // listen
 app.listen(port, () => { console.log('server running at port 3000') });
