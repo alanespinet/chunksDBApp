@@ -21,18 +21,8 @@ app.get('/', (req, res) => {
 });
 
 
-// get
-// app.get('/:uid/chunks', (req, res) => {
-//   var uid = req.params.uid;
-//
-//   User.find({ 'user_id': uid }).then( (users) => {
-//     console.log(users);
-//     res.send(users);
-//   }).catch( (e) => {
-//     res.stats(400).send(e);
-//   });
-// });
-
+// get user and all its chunks. The response of the find method returns an
+// array of one element (if user is found) or empty array (if user is not found)
 app.get('/users/:uid', (req, res) => {
   var uid = req.params.uid;
 
@@ -42,18 +32,6 @@ app.get('/users/:uid', (req, res) => {
     res.stats(400).send(e);
   });
 });
-
-
-// get one
-// app.get('/chunks/:id', (req, res) => {
-//   var pid = req.params.id;
-//
-//   Chunk.find({ 'chunk_id': pid }).then( (chunk) => {
-//     res.send(chunk);
-//   }).catch( (e) => {
-//     res.stats(400).send(e);
-//   });
-// });
 
 
 // add
@@ -90,18 +68,6 @@ app.post('/users', (req, res) => {
     res.status(400).send(e);
   });
 });
-
-
-// delete
-// app.delete('/chunks/:id', (req, res) => {
-//   var pid = req.params.id;
-//
-//   Chunk.findOneAndRemove({ 'chunk_id': pid }).then( (chunk) => {
-//     res.send(chunk);
-//   }).catch( (e) => {
-//     res.stats(400).send(e);
-//   });
-// });
 
 
 // listen
