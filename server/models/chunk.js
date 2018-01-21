@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var Chunk = mongoose.model('Chunk', {
+var chunkSchema = new Schema({
   chunk_id: {
     type: String,
     required: true,
@@ -31,4 +32,17 @@ var Chunk = mongoose.model('Chunk', {
   }
 });
 
-module.exports = { Chunk };
+
+var userSchema = new Schema({
+  user_id: {
+    type: 'String',
+    required: true,
+    unique: true
+  },
+  chunks: [chunkSchema]
+});
+
+
+var User = mongoose.model('User', userSchema);
+
+module.exports = { User };

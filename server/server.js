@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 var { mongoose } = require('./db/mongoose');
-var { Chunk } = require('./models/chunk');
+var { User } = require('./models/chunk');
 
 var app = express();
 
@@ -22,9 +22,12 @@ app.get('/', (req, res) => {
 
 
 // get
-app.get('/chunks', (req, res) => {
-  Chunk.find().then( (chunks) => {
-    res.send(chunks);
+app.get('/:uid/chunks', (req, res) => {
+  var uid = req.params.uid;
+
+  User.find({ 'user_id': uid }).then( (users) => {
+    console.log(users);
+    res.send(users);
   }).catch( (e) => {
     res.stats(400).send(e);
   });
@@ -32,32 +35,46 @@ app.get('/chunks', (req, res) => {
 
 
 // get one
-app.get('/chunks/:id', (req, res) => {
-  var pid = req.params.id;
-
-  Chunk.find({ 'chunk_id': pid }).then( (chunk) => {
-    res.send(chunk);
-  }).catch( (e) => {
-    res.stats(400).send(e);
-  });
-});
+// app.get('/chunks/:id', (req, res) => {
+//   var pid = req.params.id;
+//
+//   Chunk.find({ 'chunk_id': pid }).then( (chunk) => {
+//     res.send(chunk);
+//   }).catch( (e) => {
+//     res.stats(400).send(e);
+//   });
+// });
 
 
 // add
-app.post('/chunks', (req, res) => {
+// app.post('/chunks', (req, res) => {
+//
+//   console.log(req.body);
+//
+//   var chunk = new Chunk({
+//     "chunk_id": req.body.chunk_id,
+//     "title": req.body.title,
+//     "description": req.body.description,
+//     "languages": req.body.languages,
+//     "keywords": req.body.keywords,
+//     "code": req.body.code
+//   });
+//
+//   chunk.save().then( (doc) => {
+//     res.send(doc);
+//   }).catch( (e) => {
+//     res.status(400).send(e);
+//   });
+// });
 
-  console.log(req.body);
 
-  var chunk = new Chunk({
-    "chunk_id": req.body.chunk_id,
-    "title": req.body.title,
-    "description": req.body.description,
-    "languages": req.body.languages,
-    "keywords": req.body.keywords,
-    "code": req.body.code
+app.post('/users', (req, res) => {
+  var user = new User({
+    "user_id": req.body.user_id,
+    "chunks": []
   });
 
-  chunk.save().then( (doc) => {
+  user.save().then( (doc) => {
     res.send(doc);
   }).catch( (e) => {
     res.status(400).send(e);
@@ -66,15 +83,15 @@ app.post('/chunks', (req, res) => {
 
 
 // delete
-app.delete('/chunks/:id', (req, res) => {
-  var pid = req.params.id;
-
-  Chunk.findOneAndRemove({ 'chunk_id': pid }).then( (chunk) => {
-    res.send(chunk);
-  }).catch( (e) => {
-    res.stats(400).send(e);
-  });
-});
+// app.delete('/chunks/:id', (req, res) => {
+//   var pid = req.params.id;
+//
+//   Chunk.findOneAndRemove({ 'chunk_id': pid }).then( (chunk) => {
+//     res.send(chunk);
+//   }).catch( (e) => {
+//     res.stats(400).send(e);
+//   });
+// });
 
 
 // listen
