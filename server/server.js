@@ -22,11 +22,21 @@ app.get('/', (req, res) => {
 
 
 // get
-app.get('/:uid/chunks', (req, res) => {
+// app.get('/:uid/chunks', (req, res) => {
+//   var uid = req.params.uid;
+//
+//   User.find({ 'user_id': uid }).then( (users) => {
+//     console.log(users);
+//     res.send(users);
+//   }).catch( (e) => {
+//     res.stats(400).send(e);
+//   });
+// });
+
+app.get('/users/:uid', (req, res) => {
   var uid = req.params.uid;
 
   User.find({ 'user_id': uid }).then( (users) => {
-    console.log(users);
     res.send(users);
   }).catch( (e) => {
     res.stats(400).send(e);
